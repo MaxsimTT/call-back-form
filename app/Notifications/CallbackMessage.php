@@ -8,6 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Http\Requests\ContactFormRequest;
 use Illuminate\Queue\SerializesModels;
+use Lang;
 
 class CallbackMessage extends Notification implements ShouldQueue
 {
@@ -46,14 +47,14 @@ class CallbackMessage extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject(config('admin.name') . ", новое сообщение с localhost")
+                    ->subject(Lang::get('callback_form.subject', ['name' => config('admin.name')]))
                     ->greeting(" ")
                     ->salutation(" ")
                     ->from($this->message['email'], 'no-reply')
-                    ->line('Имя: ' . $this->message['name'])
-                    ->line('E-mail: ' . $this->message['email'])
-                    ->line('Телефон:' . $this->message['phone'])
-                    ->line($this->message['message']);
+                    ->line(Lang::get('callback_form.name', ['user_name' => $this->message['name']]))
+                    ->line(Lang::get('callback_form.email', ['user_email' => $this->message['email']]))
+                    ->line(Lang::get('callback_form.phone', ['user_phone' => $this->message['phone']]))
+                    ->line(Lang::get('callback_form.message', ['user_message' => $this->message['message']]));
     }
 
     /**
