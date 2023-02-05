@@ -7,8 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Http\Requests\ContactFormRequest;
+use Illuminate\Queue\SerializesModels;
 
-class CallbackMessage extends Notification
+class CallbackMessage extends Notification implements ShouldQueue
 {
 
     use Queueable;
@@ -20,7 +21,7 @@ class CallbackMessage extends Notification
      *
      * @return void
      */
-    public function __construct(ContactFormRequest $message)
+    public function __construct($message)
     {
         $this->message = $message;
     }
@@ -45,9 +46,14 @@ class CallbackMessage extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject(config('admin.name') . ", новое сообщение с localhost")
+                    ->greeting(" ")
+                    ->salutation(" ")
+                    ->from($this->message['email'], 'no-reply')
+                    ->line('Имя: ' . $this->message['name'])
+                    ->line('E-mail: ' . $this->message['email'])
+                    ->line('Телефон:' . $this->message['phone'])
+                    ->line($this->message['message']);
     }
 
     /**
@@ -63,13 +69,3 @@ class CallbackMessage extends Notification
         ];
     }
 }
-
-                    // ->subject(config('admin.name') . ", новое сообщение с localhost")
-                    // ->greeting(" ")
-                    // ->salutation(" ")
-                    // ->from(config('mail.username'), 'no-reply')
-                    // ->line('Имя: ' . $this->message->name)
-                    // ->line('E-mail: ' . $this->message->email)
-                    // ->line('Телефон:' . $this->message->phone)
-                    // ->line('Сообщение: ')
-                    // ->line($this->message->message)
