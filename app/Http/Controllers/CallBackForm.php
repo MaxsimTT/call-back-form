@@ -10,21 +10,27 @@ use Notification;
 class CallBackForm extends Controller
 {
 
-     /**
+    /**
      * @OA\Post(
      *     path="/api/contact",
-     *     summary="Send call back form to email admin",
+     *     tags={"call back form"},
+     *     summary="Sending call back form to admin email",
+     *     operationId="sendingCallBackForm",
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
      *                 @OA\Property(
-     *                     property="message",
-     *                     type="object"
+     *                     property="name",
+     *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="email",
-     *                     type="string"
+     *                     type="email"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="text"
      *                 ),
      *                 @OA\Property(
      *                     property="phone",
@@ -33,28 +39,22 @@ class CallBackForm extends Controller
      *                         @OA\Schema(type="integer"),
      *                     }
      *                 ),
-     *                 @OA\Property(
-     *                     property="message",
-     *                     type="text"
-     *                 ),
-     *                 example={"name": "User", "email": "example@mail.com", "phone": 12345678, "message": "Hello, World"}
+     *                 example={"name": "Jessica Smith", "email": "example@qwe.com", "messsage": "Hello, World", "phone": 12345678}
      *             )
      *         )
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="OK",
-     *         @OA\JsonContent(
-     *             oneOf={
-     *                 @OA\Schema(ref="#/components/schemas/Result"),
-     *                 @OA\Schema(type="boolean")
-     *             },
-     *             @OA\Examples(example="result", value={"success": true}, summary="An result object."),
-     *         )
-     *     )
+     *         description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="forbidden",
+     *     ),
      * )
+     *
      */
-
+    
     public function mailToAdmin(ContactFormRequest $message) {
 
         if ($message->isMethod('POST')) {

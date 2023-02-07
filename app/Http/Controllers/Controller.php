@@ -9,8 +9,18 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *  title="My Swagger Application",
- *  version="1.0.0",
+ *     description="This web application is designed to test interesting features of Laravel
+ ",
+ *     version="1.0.0",
+ *     title="Test web application",
+ *     termsOfService="http://swagger.io/terms/",
+ *     @OA\Contact(
+ *         email="egorovcotmax@gmail.com"
+ *     ),
+ * )
+ * @OA\Server(
+ *     description="API test this application",
+ *     url="http://127.0.0.1:8000"
  * )
  */
 
