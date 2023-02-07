@@ -61,7 +61,7 @@ class CallBackForm extends Controller
 
         if ($message->isMethod('POST')) {
 
-            $obj->sendFormToAdmin(App::make(CallbackMessage::class));
+            $obj->sendFormToAdmin($message);
             return response()->json('Success', 201);
         }
 
