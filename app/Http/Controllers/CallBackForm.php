@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ContactFormRequest;
 use App\Notifications\CallbackMessage;
 use Notification;
+use App;
+use App\Helpers\Contracts\SendFormCallBack;
 
 class CallBackForm extends Controller
 {
@@ -55,11 +57,11 @@ class CallBackForm extends Controller
      *
      */
     
-    public function mailToAdmin(ContactFormRequest $message) {
+    public function mailToAdmin(ContactFormRequest $message, SendFormCallBack $obj) {
 
         if ($message->isMethod('POST')) {
 
-            Notification::route('mail', config('admin.email'))->notify(new CallbackMessage($message->validated()));
+            $obj->sendFormToAdmin(App::make(CallbackMessage::class));
             return response()->json('Success', 201);
         }
 

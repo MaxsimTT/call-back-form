@@ -7,7 +7,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Http\Requests\ContactFormRequest;
-use Illuminate\Queue\SerializesModels;
 use Lang;
 
 class CallbackMessage extends Notification implements ShouldQueue
@@ -22,9 +21,9 @@ class CallbackMessage extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct(ContactFormRequest $message)
     {
-        $this->message = $message;
+        $this->message = $message->validated();
     }
 
     /**
