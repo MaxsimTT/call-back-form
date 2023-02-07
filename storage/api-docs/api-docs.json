@@ -1,0 +1,73 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Test web application",
+        "description": "This web application is designed to test interesting features of Laravel\r\n ",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "egorovcotmax@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "API test this application"
+        }
+    ],
+    "paths": {
+        "/api/contact": {
+            "post": {
+                "tags": [
+                    "call back form"
+                ],
+                "summary": "Sending call back form to admin email",
+                "operationId": "sendingCallBackForm",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "email"
+                                    },
+                                    "message": {
+                                        "type": "text"
+                                    },
+                                    "phone": {
+                                        "oneOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Jessica Smith",
+                                    "email": "example@qwe.com",
+                                    "messsage": "Hello, World",
+                                    "phone": 12345678
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "403": {
+                        "description": "forbidden"
+                    }
+                }
+            }
+        }
+    }
+}
