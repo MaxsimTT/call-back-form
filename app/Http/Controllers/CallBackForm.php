@@ -7,7 +7,8 @@ use App\Http\Requests\ContactFormRequest;
 use App\Notifications\CallbackMessage;
 use Notification;
 use App;
-use App\Helpers\Contracts\SendFormCallBack;
+// use App\Helpers\Contracts\SendFormCallBack;
+use SendFormCallBack;
 
 class CallBackForm extends Controller
 {
@@ -57,11 +58,11 @@ class CallBackForm extends Controller
      *
      */
     
-    public function mailToAdmin(ContactFormRequest $message, SendFormCallBack $obj) {
+    public function mailToAdmin(ContactFormRequest $message) {
 
         if ($message->isMethod('POST')) {
 
-            $obj->sendFormToAdmin($message);
+            SendFormCallBack::sendFormToAdmin($message);
             return response()->json('Success', 201);
         }
 

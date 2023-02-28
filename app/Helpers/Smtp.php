@@ -11,7 +11,7 @@ use App;
 class Smtp implements SendFormCallBack
 {
 
-	public function sendFormToAdmin(ContactFormRequest $message)
+	public static function sendFormToAdmin(ContactFormRequest $message)
 	{
 		Notification::route('mail', config('admin.email'))->notify(App::make(CallbackMessage::class, ['message' => $message]));
 	}

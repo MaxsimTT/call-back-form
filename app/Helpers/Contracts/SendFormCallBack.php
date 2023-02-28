@@ -7,5 +7,5 @@ use App\Http\Requests\ContactFormRequest;
 interface SendFormCallBack
 {
 
-	public function sendFormToAdmin(ContactFormRequest $message);
+	public static function sendFormToAdmin(ContactFormRequest $message);
 }
